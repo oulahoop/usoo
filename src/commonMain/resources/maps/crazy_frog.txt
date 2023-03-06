@@ -1,0 +1,6 @@
+name:crazy frog
+author:mael
+difficulty:1
+music:crazy_frog.mp3
+TAP,0:01:01,A
+HOLD,0:01:02,0:01:04,A

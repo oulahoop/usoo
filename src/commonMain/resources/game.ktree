@@ -1,0 +1,12 @@
+<ktree width="1100.0" height="680.0" gridWidth="20" gridHeight="20">
+	<solidrect colorMul="#cddaffff" width="660.0" height="680.0"/>
+	<text x="900.0" y="40.0" scaleX="1.0302242716411654" autoScaling="true" text="Score" textSize="50.0" verticalAlign="TOP" horizontalAlign="LEFT"/>
+	<text x="880.0" y="480.0" scaleX="0.9844463519313305" autoScaling="true" text="Combo" textSize="50.0" verticalAlign="TOP" horizontalAlign="LEFT"/>
+	<text name="score" x="990.0" y="100.0" autoScaling="true" text="0" textSize="50.0" verticalAlign="TOP" horizontalAlign="LEFT"/>
+	<text name="combo" x="965.0" y="540.0" autoScaling="true" text="0x" textSize="50.0" verticalAlign="TOP" horizontalAlign="LEFT"/>
+	<solidrect colorMul="#a9596a5e" blendMode="ADD" alpha="0.3686274509803922" x="800.0" width="300.0" height="680.0"/>
+	<solidrect name="rectA" colorMul="#ff0000ff" blendMode="NONE" x="50.0" y="600.0" width="100.0" height="50.0"/>
+	<solidrect name="rectB" colorMul="#00ff00ff" blendMode="NONE" x="200.0" y="600.0" width="100.0" height="50.0"/>
+	<solidrect name="rectC" colorMul="#0000ffff" blendMode="NONE" x="350.0" y="600.0" width="100.0" height="50.0"/>
+	<solidrect name="rectD" colorMul="#ffff00ff" blendMode="NONE" x="500.0" y="600.0" width="100.0" height="50.0"/>
+</ktree>
