@@ -1,5 +1,8 @@
 package models
 
+import com.soywiz.korge.view.*
+import vues.*
+
 //Class with the data of a game of piano tiles
 class Map {
     var musicPath: String = ""
@@ -40,6 +43,41 @@ class Map {
     //Returns the string representation of the map
     override fun toString(): String {
         return "Map(name='$name', author='$author', difficulty='$difficulty', notes=$notes)"
+    }
+
+    /*
+    Start the map music, print the notes and wait for the user to press the correct key
+     */
+    fun start(container: SContainer) {
+        //Print the notes
+        var currentTime = -2000L
+        val listNotePrinted = mutableListOf<Note>()
+        println(notes)
+        //Tant que la dernière note n'est pas passé
+        while (currentTime < notes.last().time + 2000) {
+            //Pour chaque note
+            for (note in notes) {
+                // Si la note est dans la fenêtre de temps
+                if(Utils.isInInterval(note.time - 2000, currentTime-50, currentTime+50) ) {
+                    //Si la note n'a pas encore été affichée
+                    if(!listNotePrinted.contains(note)) {
+                        //Afficher la note
+                        note.afficher(container)
+                        //Ajouter la note à la liste des notes affichées
+                        listNotePrinted.add(note)
+                    }
+                }
+            }
+
+            currentTime += 10
+            //Attendre 1ms
+            try {
+                Thread.sleep(10)
+            }catch (e: Exception) {
+                println(e)
+            }
+        }
+        //Wait for the user to press the correct key
     }
 
 }

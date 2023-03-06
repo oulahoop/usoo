@@ -2,5 +2,8 @@ name:crazy frog
 author:mael
 difficulty:1
 music:crazy_frog.mp3
-TAP,0:01:01,A
-HOLD,0:01:02,0:01:04,A
+TAP,0:01:00,A
+TAP,0:04:01,B
+TAP,0:10:01,C
+TAP,0:40:50,D
+HOLD,0:20:00,0:21:00,A

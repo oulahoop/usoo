@@ -1,7 +1,10 @@
 package models.notes
 
+import com.soywiz.korge.animate.*
+import com.soywiz.korge.view.*
 import com.soywiz.korim.color.*
 import models.*
+import vues.*
 
 class HoldNote : Note {
 
@@ -28,5 +31,19 @@ class HoldNote : Note {
             "D" -> Bloc.D
             else -> throw Exception("Bloc not found")
         }
+    }
+
+    override fun afficher(container: SContainer) {
+        if(color == Colors["#000000"]) {
+            color = when (lane) {
+                Bloc.A -> Colors["#ff0000"]
+                Bloc.B -> Colors["#00ff00"]
+                Bloc.C -> Colors["#0000ff"]
+                Bloc.D -> Colors["#ffff00"]
+            }
+        }
+        println("Affichage de $this")
+        val rect = RoundRect(width.toDouble(), height.toDouble(), 10.0, 10.0, color).position(lane.getXFromBloc(), Utils.Y_NOTE_BASE)
+        container.addChild(rect)
     }
 }

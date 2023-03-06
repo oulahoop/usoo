@@ -12,7 +12,7 @@ import controllers.*
 import database.*
 import vues.*
 
-suspend fun main() = Korge(width = 1100, height = 680, bgcolor = Colors["#2b2b2b"]) {
+suspend fun main() = Korge(width = 1100, height = 680, virtualWidth = 1100, virtualHeight = 680, bgcolor = Colors["#2b2b2b"]) {
 	val sceneContainer = sceneContainer()
     //Database.getInstance()
     //println(ReadMap.readMap("src/commonMain/resources/maps/crazy_frog.txt"))

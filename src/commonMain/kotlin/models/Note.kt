@@ -1,6 +1,8 @@
 package models
 
+import com.soywiz.korge.view.*
 import com.soywiz.korim.color.*
+import vues.*
 
 //Class of a note in a piano tiles game
 interface Note {
@@ -17,4 +19,5 @@ interface Note {
     override fun toString(): String
 
     fun readNote(noteInString: String)
+    fun afficher(container: SContainer)
 }

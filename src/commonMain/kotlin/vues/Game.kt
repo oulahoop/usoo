@@ -5,6 +5,10 @@ import com.soywiz.korge.scene.*
 import com.soywiz.korge.view.*
 import com.soywiz.korge.view.ktree.*
 import com.soywiz.korio.file.std.*
+import com.soywiz.korim.color.Colors
+import com.soywiz.klock.*
+import com.soywiz.kmem.*
+import com.soywiz.korge.input.*
 import models.Map
 
 class Game(val map: Map): Scene() {
@@ -35,10 +39,25 @@ class Game(val map: Map): Scene() {
         touchD.onClick {
             score.setText("D")
         }
+    }
 
-        println(map.musicPath)
-        val sound = resourcesVfs[map.musicPath].readMusic()
-        sound.play()
+    override suspend fun SContainer.sceneMain() {
+        //Start the music in musicPath with korge
+        val music = resourcesVfs[map.musicPath].readSound()
+        music.play()
+
+        println("Game started")
+
+        val t = Thread {
+            map.start(this)
+        }
+
+
+        t.start()
+
+        addUpdater {
+
+        }
     }
 
 }
