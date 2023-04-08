@@ -14,6 +14,7 @@ class HoldNote : Note {
     override var width: Int = 100
     override var height: Int = 50
     override var color: RGBA = Colors["#000000"]
+    override var rect: RoundRect? = null
 
     override fun toString(): String {
         return "HoldNote(time=$time, duration=$duration, lane=$lane, width=$width, height=$height, color=$color)"
@@ -43,7 +44,20 @@ class HoldNote : Note {
             }
         }
         println("Affichage de $this")
-        val rect = RoundRect(width.toDouble(), height.toDouble(), 10.0, 10.0, color).position(lane.getXFromBloc(), Utils.Y_NOTE_BASE)
-        container.addChild(rect)
+        this.rect = RoundRect(width.toDouble(), height.toDouble(), 10.0, 10.0, color).position(lane.getXFromBloc(), Utils.Y_NOTE_BASE)
+        container.addChild(this.rect!!)
+    }
+
+    override fun move() {
+        if (rect != null) {
+            rect!!.y += Utils.SPEED
+        }
+    }
+
+    override fun disappear() {
+        if (rect != null) {
+            rect!!.removeFromParent()
+            rect = null
+        }
     }
 }

@@ -1,6 +1,6 @@
 class Utils {
     companion object {
-        val PIXELS_PER_MS = 0.1
+        val SPEED = 3.35
         val Y_NOTE_BASE = -100.0
 
         fun convertTimeStringToMs(timeString: String): Long {

@@ -6,6 +6,7 @@ import com.soywiz.korim.color.*
 import com.soywiz.korge.view.*
 import models.*
 import vues.*
+import kotlin.math.*
 
 class TapNote : Note {
 
@@ -15,6 +16,7 @@ class TapNote : Note {
     override var width: Int = 100
     override var height: Int = 50
     override var color: RGBA = Colors["#000000"]
+    override var rect: RoundRect? = null
 
     //Constructor
     constructor(time: Long, lane: Bloc, color: RGBA) {
@@ -62,7 +64,22 @@ class TapNote : Note {
             }
         }
         println("Affichage de $this")
-        val rect = RoundRect(width.toDouble(), height.toDouble(), 10.0, 10.0, color).position(lane.getXFromBloc(), Utils.Y_NOTE_BASE)
-        container.addChild(rect)
+        this.rect = RoundRect(width.toDouble(), height.toDouble(), 10.0, 10.0, color).position(lane.getXFromBloc(), Utils.Y_NOTE_BASE)
+        // affichage de rect
+        println("Affichage de $this.rect")
+        container.addChild(this.rect!!)
+    }
+
+    override fun move() {
+        if (rect != null) {
+            rect!!.y += Utils.SPEED
+        }
+    }
+
+    override fun disappear() {
+        if (rect != null) {
+            rect!!.removeFromParent()
+            rect = null
+        }
     }
 }

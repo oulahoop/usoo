@@ -14,10 +14,13 @@ interface Note {
     var width: Int
     var height: Int
     var color: RGBA
+    var rect: RoundRect?
 
     //Returns the string representation of the note
     override fun toString(): String
 
     fun readNote(noteInString: String)
     fun afficher(container: SContainer)
+    fun move()
+    fun disappear()
 }
