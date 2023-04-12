@@ -8,6 +8,7 @@ import com.soywiz.korim.format.*
 import com.soywiz.korio.file.std.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.font.*
+import database.*
 
 
 class Menu: Scene() {
@@ -34,6 +35,26 @@ class Menu: Scene() {
         buttonRect.onClick {
             sceneContainer.changeTo({ ChooseMapMenu() })
         }
+
+        //Set option button rect
+        val optionButtonRect = roundRect(300.0, 100.0, 20.0, fill = Colors["#00000020"]) {
+            position(400.0, 500.0)
+            filter = DropshadowFilter(3.0, 3.0, Colors.BLACK)
+        }
+
+        //Set option button text
+        text("Options", textSize = 50.0, font = resourcesVfs["fonts/Roboto-Medium.ttf"].readTtfFont(), color = Colors["#ffffff"]) {
+            centerOn(optionButtonRect)
+            filter = DropshadowFilter(3.0, 3.0, Colors.BLACK)
+        }
+
+        //On click on option button, change scene to Options
+        optionButtonRect.onClick {
+            sceneContainer.changeTo({ Option() })
+        }
+
+        // On ajoute les preferences en terme de touches
+        PreferencesDAO().readPreferences()
     }
 }
 

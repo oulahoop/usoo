@@ -1,0 +1,9 @@
+<ktree width="1280.0" height="720.0" gridWidth="20" gridHeight="20">
+	<solidrect colorMul="#000000ff" x="580.0" y="360.0" anchorX="0.5" anchorY="0.5" width="680.0" height="380.0"/>
+	<text x="360.0" y="240.0" scaleX="3.5199556541019956" scaleY="3.339130434782609" autoScaling="true" text="Choisis tes touches" textSize="16.0" verticalAlign="TOP" horizontalAlign="LEFT"/>
+	<text x="340.0" y="380.0" scaleX="3.1999999999999997" scaleY="3.339130434782609" autoScaling="true" text="A" textSize="16.0" verticalAlign="TOP" horizontalAlign="LEFT"/>
+	<text x="490.0" y="380.0" scaleX="3.8400000000000003" scaleY="3.339130434782609" autoScaling="true" text="Z" textSize="16.0" verticalAlign="TOP" horizontalAlign="LEFT"/>
+	<text x="640.0" y="380.0" scaleX="4.266666666666667" scaleY="3.339130434782609" autoScaling="true" text="E" textSize="16.0" verticalAlign="TOP" horizontalAlign="LEFT"/>
+	<text x="790.0" y="380.0" scaleX="3.5199556541019956" scaleY="3.339130434782609" autoScaling="true" text="R" textSize="16.0" verticalAlign="TOP" horizontalAlign="LEFT"/>
+	<__ex_physics friction="0.2" restitution="0.2"/>
+</ktree>

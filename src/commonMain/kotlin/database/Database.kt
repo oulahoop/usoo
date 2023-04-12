@@ -23,16 +23,30 @@ class Database {
     }
 
     private fun connectToDatabase() {
+        Class.forName("org.sqlite.JDBC");
+
         val path = Paths.get("").toAbsolutePath().toString() + "/data/database.db"
 
-        Class.forName("org.sqlite.JDBC");
         connection = DriverManager.getConnection("jdbc:sqlite:$path")
     }
 
     private fun createTable() {
         val statement = connection!!.createStatement()
         //Score
-        statement.execute("CREATE TABLE IF NOT EXISTS score (id INTEGER PRIMARY KEY AUTOINCREMENT, id_map INTEGER, score INTEGER, max_combo INTEGER)")
+        statement.execute("" +
+            "CREATE TABLE IF NOT EXISTS score (" +
+            "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            "id_map INTEGER, " +
+            "score INTEGER, " +
+            "max_combo INTEGER, " +
+            "x300 INTEGER, " +
+            "x100 INTEGER, " +
+            "x50 INTEGER, " +
+            "miss INTEGER )"
+        )
+
+        //Preferences (touchs)
+        statement.execute("CREATE TABLE IF NOT EXISTS preferences (id INTEGER PRIMARY KEY, touche VARCHAR(1))")
     }
 
 }

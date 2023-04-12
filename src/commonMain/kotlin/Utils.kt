@@ -1,11 +1,17 @@
 import models.*
-
+import com.soywiz.korev.*
 class Utils {
     companion object {
         var SPEED = 0.0
         val Y_NOTE_BASE = -100.0
         val Y_PERFECT_TIMING = 600.0
         val TIME_BEFORE_SPAWN_NOTE = 2000;
+
+        // Touches (tableau de string)
+        var TOUCHES = arrayOf("A", "B", "C", "D")
+
+        // Last Score
+        var LAST_SCORE = Score("", 0, 0, 0, 0, 0, 0)
 
         fun convertTimeStringToMs(timeString: String): Long {
             val parts = timeString.split(":")
@@ -32,6 +38,22 @@ class Utils {
 
         fun getSpeed(): Double {
             return SPEED
+        }
+
+        fun setTouche(id: Int, touche: String?) {
+            TOUCHES[id] = touche!!
+        }
+
+        fun getKey(i: Int): Key? {
+            val toucheStr = TOUCHES[i]
+            // Retourne la key associé a toucheStr
+            Key.values().forEach {
+                if (it.name == toucheStr) {
+                    return it
+                }
+            }
+            // Sinon on retourne null
+            return null
         }
     }
 }

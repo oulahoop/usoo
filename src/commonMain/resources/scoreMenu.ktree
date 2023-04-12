@@ -1,0 +1,15 @@
+<ktree width="1280.0" height="720.0" gridWidth="20" gridHeight="20">
+	<solidrect colorMul="#000000ff" x="400.0" y="80.0" width="520.0" height="540.0"/>
+	<text x="420.0" y="120.0" scaleX="4.282121148606162" scaleY="4.452173913043478" autoScaling="true" text="Score" textSize="16.0" verticalAlign="TOP" horizontalAlign="LEFT"/>
+	<text name="score" x="440.0" y="200.0" scaleX="2.6723957241668415" scaleY="3.339130434782609" autoScaling="true" text="0" textSize="16.0" verticalAlign="TOP" horizontalAlign="LEFT"/>
+	<text x="440.0" y="300.0" scaleX="4.282121148606162" scaleY="4.452173913043478" autoScaling="true" text="x300" textSize="16.0" verticalAlign="TOP" horizontalAlign="LEFT"/>
+	<text name="x300" x="440.0" y="380.0" scaleX="2.6723957241668415" scaleY="3.339130434782609" autoScaling="true" text="0" textSize="16.0" verticalAlign="TOP" horizontalAlign="LEFT"/>
+	<text x="620.0" y="300.0" scaleX="4.282121148606162" scaleY="4.452173913043478" autoScaling="true" text="x100" textSize="16.0" verticalAlign="TOP" horizontalAlign="LEFT"/>
+	<text name="x100" x="620.0" y="380.0" scaleX="2.6723957241668415" scaleY="3.339130434782609" autoScaling="true" text="0" textSize="16.0" verticalAlign="TOP" horizontalAlign="LEFT"/>
+	<text x="780.0" y="300.0" scaleX="4.282121148606162" scaleY="4.452173913043478" autoScaling="true" text="x50" textSize="16.0" verticalAlign="TOP" horizontalAlign="LEFT"/>
+	<text name="x50" x="780.0" y="380.0" scaleX="2.6723957241668415" scaleY="3.339130434782609" autoScaling="true" text="0" textSize="16.0" verticalAlign="TOP" horizontalAlign="LEFT"/>
+	<text x="600.0" y="440.0" scaleX="4.282121148606162" scaleY="4.452173913043478" autoScaling="true" text="MISS" textSize="16.0" verticalAlign="TOP" horizontalAlign="LEFT"/>
+	<text name="miss" x="660.0" y="520.0" scaleX="2.6723957241668415" scaleY="3.339130434782609" autoScaling="true" text="0" textSize="16.0" verticalAlign="TOP" horizontalAlign="LEFT"/>
+	<text x="760.0" y="120.0" scaleX="4.282121148606162" scaleY="4.452173913043478" autoScaling="true" text="Top" textSize="16.0" verticalAlign="TOP" horizontalAlign="LEFT"/>
+	<text name="top" x="840.0" y="200.0" scaleX="2.6723957241668415" scaleY="3.339130434782609" autoScaling="true" text="1" textSize="16.0" verticalAlign="TOP" horizontalAlign="LEFT"/>
+</ktree>

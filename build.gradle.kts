@@ -21,3 +21,14 @@ korge {
 	//targetIos()
 	//targetAndroidIndirect() // targetAndroidDirect()
 }
+
+
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation("org.xerial:sqlite-jdbc:3.36.0.3")
+            }
+        }
+    }
+}

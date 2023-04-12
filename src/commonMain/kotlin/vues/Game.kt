@@ -1,5 +1,6 @@
 package vues
 
+import Utils
 import com.soywiz.korau.sound.*
 import com.soywiz.korge.scene.*
 import com.soywiz.korge.view.*
@@ -7,6 +8,7 @@ import com.soywiz.korge.view.ktree.*
 import com.soywiz.korio.file.std.*
 import com.soywiz.klock.*
 import com.soywiz.korev.*
+import com.soywiz.korio.async.*
 import models.*
 import models.Map
 import vues.observer.*
@@ -23,6 +25,12 @@ class Game(val map: Map): Scene() {
     var notesPrinted = mutableListOf<Note>()
     var currentMapTime = -2000L
     var lastPrecisionNote = 0
+
+    // Variables de précision
+    var x300 = 0
+    var x100 = 0
+    var x50 = 0
+    var miss = 0
 
     // GameState
     var gameState = GameState.GAME
@@ -71,25 +79,28 @@ class Game(val map: Map): Scene() {
 
         // Lorsqu'une touche est pressée
         addUpdater {
-            if (views.input.keys.justPressed(Key.A)) {
-                println("A")
-                keysPressed("A")
+            // Récupéré la touche associée à la note
+            val key1 = Utils.getKey(0)
+            val key2 = Utils.getKey(1)
+            val key3 = Utils.getKey(2)
+            val key4 = Utils.getKey(3)
+
+            if (key1 != null && views.input.keys.justPressed(key1)) {
+                keysPressed(key1.name)
             }
 
-            if (views.input.keys.justPressed(Key.Z)) {
-                println("B")
-                keysPressed("Z")
+            if (key2 != null && views.input.keys.justPressed(key2)) {
+                keysPressed(key2.name)
             }
 
-            if (views.input.keys.justPressed(Key.E)) {
-                println("C")
-                keysPressed("E")
+            if (key3 != null && views.input.keys.justPressed(key3)) {
+                keysPressed(key3.name)
             }
 
-            if (views.input.keys.justPressed(Key.R)) {
-                println("D")
-                keysPressed("R")
+            if (key4 != null && views.input.keys.justPressed(key4)) {
+                keysPressed(key4.name)
             }
+
         }
 
         // Initialise la speed des notes
@@ -104,7 +115,7 @@ class Game(val map: Map): Scene() {
     }
 
 
-    private fun endMap() {
+    private suspend fun endMap() {
         // Reset game
         score = 0
         combo = 0
@@ -114,13 +125,17 @@ class Game(val map: Map): Scene() {
         currentMapTime = -2000L
 
         // Save score to bdd
-        val score = Score(map.getId(), this.score, this.maxCombo)
+        val score = Score(map.getId(), this.score, this.maxCombo, this.x300, this.x100, this.x50, this.miss)
         //score.save()
 
         // Print score
         println("Score : $score")
 
-        // Go back to menu
+        // Update last score
+        Utils.LAST_SCORE = score
+
+        // Change scene
+        sceneContainer.changeTo<Menu>()
     }
 
 
@@ -157,6 +172,7 @@ class Game(val map: Map): Scene() {
                         if (it.rect!!.y > 680) { // S'il a dépassé la limite on le supprime
                             it.rect!!.removeFromParent()
                             it.rect = null
+                            miss++
                             updateScore(0)
                         }
                     }
@@ -167,7 +183,9 @@ class Game(val map: Map): Scene() {
             }
         }
 
-        endMap()
+        launch {
+            endMap()
+        }
     }
 
     /**
@@ -188,19 +206,19 @@ class Game(val map: Map): Scene() {
                 this.isNoteWellPressed(note)
             }
 
-            if (key == "A" && note.lane == Bloc.A) {
+            if (key == Utils.TOUCHES[0] && note.lane == Bloc.A) {
                 this.isNoteWellPressed(note)
             }
 
-            if (key == "Z" && note.lane == Bloc.B) {
+            if (key == Utils.TOUCHES[1] && note.lane == Bloc.B) {
                 this.isNoteWellPressed(note)
             }
 
-            if (key == "E" && note.lane == Bloc.C) {
+            if (key == Utils.TOUCHES[2] && note.lane == Bloc.C) {
                 this.isNoteWellPressed(note)
             }
 
-            if (key == "R" && note.lane == Bloc.D) {
+            if (key == Utils.TOUCHES[3] && note.lane == Bloc.D) {
                 this.isNoteWellPressed(note)
             }
         }
@@ -248,24 +266,28 @@ class Game(val map: Map): Scene() {
             println("Perfect timing")
             note.disappear()
             updateScore(300)
+            x300++
         }
         // Good timing
         else if (Utils.isInInterval(currentMapTime, note.time - 200, note.time + 200)) {
             println("Good timing")
             note.disappear()
             updateScore(100)
+            x100++
         }
         // Bad timing
         else if (Utils.isInInterval(currentMapTime, note.time - 300 , note.time + 300)) {
             println("Bad timing")
             note.disappear()
             updateScore(50)
+            x50++
         }
         // False timing
         else if (Utils.isInInterval(currentMapTime, note.time - 600, note.time + 600)) {
             println("False timing")
             note.disappear()
             updateScore(0)
+            miss++
         }
     }
 
