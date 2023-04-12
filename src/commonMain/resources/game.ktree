@@ -9,4 +9,5 @@
 	<solidrect name="rectB" colorMul="#00ff00ff" blendMode="NONE" x="200.0" y="600.0" width="100.0" height="50.0"/>
 	<solidrect name="rectC" colorMul="#0000ffff" blendMode="NONE" x="350.0" y="600.0" width="100.0" height="50.0"/>
 	<solidrect name="rectD" colorMul="#ffff00ff" blendMode="NONE" x="500.0" y="600.0" width="100.0" height="50.0"/>
+	<text name="precisionNote" x="275.0" y="60.0" scaleX="0.8585202263676378" scaleY="0.8904347826086957" autoScaling="true" text="" textSize="50.0" verticalAlign="TOP" horizontalAlign="LEFT"/>
 </ktree>

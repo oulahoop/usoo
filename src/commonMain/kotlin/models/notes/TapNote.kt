@@ -72,7 +72,7 @@ class TapNote : Note {
 
     override fun move() {
         if (rect != null) {
-            rect!!.y += Utils.SPEED
+            rect!!.y += Utils.getSpeed()
         }
     }
 
