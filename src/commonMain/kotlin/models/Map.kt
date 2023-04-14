@@ -1,12 +1,5 @@
 package models
 
-import com.soywiz.korau.sound.*
-import com.soywiz.korge.view.*
-import com.soywiz.korio.file.std.*
-import jdk.jshell.execution.Util
-import vues.*
-
-//Class with the data of a game of piano tiles
 class Map {
     var musicPath: String = ""
     var name: String = ""

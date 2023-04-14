@@ -25,7 +25,7 @@ class ScoreMenuScene(val score: Score, val soundPlaying: SoundChannel, val map: 
         val x300 = myTree["x300"]
         val x100 = myTree["x100"]
         val x50 = myTree["x50"]
-        val miss = myTree["x0"]
+        val miss = myTree["miss"]
         val top = myTree["top"]
 
         //Bouton et listener

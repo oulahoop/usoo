@@ -1,4 +1,3 @@
-import models.*
 import com.soywiz.korev.*
 class Utils {
     companion object {
@@ -8,7 +7,7 @@ class Utils {
         val TIME_BEFORE_SPAWN_NOTE = 2000
 
         // Touches (tableau de string)
-        var TOUCHES = arrayOf("A", "B", "C", "D")
+        var TOUCHES = arrayOf("A", "Z", "E", "R")
 
         fun convertTimeStringToMs(timeString: String): Long {
             val parts = timeString.split(":")

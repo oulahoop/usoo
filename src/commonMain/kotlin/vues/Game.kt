@@ -110,7 +110,7 @@ class Game(val map: Map): Scene() {
             if (key1 != null && views.input.keys.justPressed(key1)) {
                 // Animation sur rectA pour visualiser le clic
                 launchImmediately {
-                    rectA.colorMul = Colors["#ff2f3e"]
+                    rectA.colorMul = Colors["#ff5965"]
                 }
                 keysPressed(key1.name)
             }
@@ -197,10 +197,6 @@ class Game(val map: Map): Scene() {
         notesPrinted = mutableListOf()
         currentMapTime = -2000L
 
-
-        // Print score
-        println("Score : $scoreFinal")
-
         // Retour au menu
         sceneContainer.changeTo({ ScoreMenuScene(scoreFinal, soundPlaying, map)})
     }
@@ -213,10 +209,6 @@ class Game(val map: Map): Scene() {
         //Notes a afficher
         val notesToPrint = map.notes
 
-        // Afficher le temps de chaque note
-        for (note in notesToPrint) {
-            println(note.time)
-        }
         //Tant que la dernière note n'est pas passé
         while (currentMapTime < notesToPrint.last().time + 2000) {
             //Pour chaque note
@@ -237,7 +229,6 @@ class Game(val map: Map): Scene() {
             currentMapTime += 10 // On incrémente le temps de la map
             //Attendre 10ms
             Thread.sleep(9)
-            println(currentMapTime)
             try {
                 // Pour chaque note affiché
                 notesPrinted.forEach {
@@ -246,13 +237,12 @@ class Game(val map: Map): Scene() {
                         if (it.rect!!.y > 680) { // S'il a dépassé la limite on le supprime
                             it.rect!!.removeFromParent()
                             it.rect = null
-                            miss++
                             updateScore(0)
                         }
                     }
                 }
             }catch (e: Exception) {
-                println(e)
+                e.printStackTrace()
             }
         }
 
@@ -299,42 +289,16 @@ class Game(val map: Map): Scene() {
      * Récupère les notes les plus proches du temps actuel de la map
      */
     fun getClosestNotesPrinted(): MutableList<Note> {
-        var closestTime = Long.MIN_VALUE
         val closestNotes = mutableListOf<Note>()
         val lanes = mutableListOf<Bloc>()
 
         for (note in notesPrinted) {
-            /*
-            // Si la note n'est pas affiché on la skip
-            if (note.rect == null) {
-                continue
-            }
-
-            // Si le temps le plus proche est Long.MIN_VALUE on le met à la valeur de la note
-            if (closestTime == Long.MIN_VALUE) {
-                closestTime = note.time
-                closestNotes.add(note)
-            } else {
-
-                // On regarde si le temps de la note est inférieur au temps le plus proche courant
-                if (note.time < closestTime) {
-                    // Si oui on supprime la liste et on ajoute la note et on assigne le closestTime
-                    closestTime = note.time
-                    closestNotes.clear()
-                    closestNotes.add(note)
-                } else if (note.time == closestTime) { // Si c'est égal (notes en même temps)
-                    // On ajoute la note à la liste
-                    closestNotes.add(note)
-                }
-            }
-             */
-
             // SI note pas affiché, on skip
             if (note.rect == null) {
                 continue
             }
 
-            // SI lane déjà pris en compte, on skip car on veut pas double clique
+            // SI lane déjà pris en compte, on skip car on veut pas double clique si note bien proche
             if (lanes.contains(note.lane)) {
                 continue
             }
@@ -354,31 +318,26 @@ class Game(val map: Map): Scene() {
     private fun isNoteWellPressed(note: Note) {
         // Perfect timing
         if (Utils.isInInterval(currentMapTime, note.time - 100, note.time + 100)) {
-            println("Perfect timing")
             note.disappear()
             updateScore(300)
             x300++
         }
         // Good timing
         else if (Utils.isInInterval(currentMapTime, note.time - 200, note.time + 200)) {
-            println("Good timing")
             note.disappear()
             updateScore(100)
             x100++
         }
         // Bad timing
         else if (Utils.isInInterval(currentMapTime, note.time - 300 , note.time + 300)) {
-            println("Bad timing")
             note.disappear()
             updateScore(50)
             x50++
         }
         // False timing
         else if (Utils.isInInterval(currentMapTime, note.time - 600, note.time + 600)) {
-            println("False timing")
             note.disappear()
             updateScore(0)
-            miss++
         }
     }
 
@@ -391,6 +350,7 @@ class Game(val map: Map): Scene() {
         if(value == 0) {
             life -= 10
             combo = 0
+            miss++
         }
         // Sinon on gagne de la vie et on augmente le combo
         else {
@@ -402,8 +362,6 @@ class Game(val map: Map): Scene() {
         score += value * combo
         maxCombo = max(maxCombo, combo)
 
-        println("Score : $score, Combo : $combo, Life : $life")
-
         // On notifie les observers du changement
         notifyScoreObservers()
     }
@@ -411,7 +369,7 @@ class Game(val map: Map): Scene() {
     /**
      * Notifie les observers du changement de score/combo/life
      */
-    private fun notifyScoreObservers() {
+    fun notifyScoreObservers() {
         gameObservers.forEach {
             it.onScoreChanged(score, combo, life, lastPrecisionNote)
         }

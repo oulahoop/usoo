@@ -1,20 +1,15 @@
 package vues
 
 import Utils
-import com.soywiz.kgl.KmlGl.Companion.RGBA
-import com.soywiz.korag.*
 import com.soywiz.korge.annotations.*
 import com.soywiz.korge.input.*
 import com.soywiz.korge.scene.*
 import com.soywiz.korge.ui.*
 import com.soywiz.korge.view.*
 import com.soywiz.korge.view.filter.*
-import com.soywiz.korge.view.roundRect
-import com.soywiz.korio.file.std.*
-import com.soywiz.korim.color.Colors
+import com.soywiz.korim.color.*
 import com.soywiz.korim.font.*
-import com.soywiz.korim.format.*
-import com.soywiz.korma.geom.vector.*
+import com.soywiz.korio.file.std.*
 import database.*
 import java.util.*
 

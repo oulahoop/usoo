@@ -1,12 +1,9 @@
 package models.notes
 
 import Utils
-import com.soywiz.korge.animate.*
-import com.soywiz.korim.color.*
 import com.soywiz.korge.view.*
+import com.soywiz.korim.color.*
 import models.*
-import vues.*
-import kotlin.math.*
 
 class TapNote : Note {
 
@@ -63,10 +60,7 @@ class TapNote : Note {
                 Bloc.D -> Colors["#ffff00"]
             }
         }
-        println("Affichage de $this")
         this.rect = RoundRect(width.toDouble(), height.toDouble(), 10.0, 10.0, color).position(lane.getXFromBloc(), Utils.Y_NOTE_BASE)
-        // affichage de rect
-        println("Affichage de $this.rect")
         container.addChild(this.rect!!)
     }
 

@@ -1,10 +1,9 @@
 package models.notes
 
-import com.soywiz.korge.animate.*
+import Utils
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.*
 import models.*
-import vues.*
 
 class HoldNote : Note {
 
@@ -21,7 +20,6 @@ class HoldNote : Note {
     }
 
     override fun readNote(noteInString: String) {
-        println(noteInString)
         val note = noteInString.split(",")
         time = Utils.convertTimeStringToMs(note[1])
         duration = Utils.convertTimeStringToMs(note[2]) - time
@@ -43,7 +41,6 @@ class HoldNote : Note {
                 Bloc.D -> Colors["#ffff00"]
             }
         }
-        println("Affichage de $this")
         this.rect = RoundRect(width.toDouble(), height.toDouble(), 10.0, 10.0, color).position(lane.getXFromBloc(), Utils.Y_NOTE_BASE)
         container.addChild(this.rect!!)
     }
