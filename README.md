@@ -65,3 +65,10 @@ TAP: TAP, time of the note, button of the note
 HOLD: HOLD, start time of the hold, end time of the hold , button of the hold
 ```
 
+## Lancer le jeu
+
+Pour lancer le jeu il suffit de faire la commande suivante à la racine du projet : 
+
+```bash
+./gradlew runJvm
+```

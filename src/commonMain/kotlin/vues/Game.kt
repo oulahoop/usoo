@@ -173,10 +173,6 @@ class Game(val map: Map): Scene() {
 
         // Lancement de la map
         t.start()
-
-        // Lancement de la musique 2 secondes après le début de la map
-        delay(2.seconds)
-        soundPlaying = music.play()
     }
 
 
@@ -207,6 +203,13 @@ class Game(val map: Map): Scene() {
 
         //Tant que la dernière note n'est pas passé
         while (currentMapTime < notesToPrint.last().time + 2000) {
+            if (currentMapTime == 0L) {
+                // Lancement de la musique 2 secondes après le début de la map
+                launchImmediately {
+                    soundPlaying = music.play()
+                }
+            }
+
             //Pour chaque note
             for (note in notesToPrint) {
                 // Si la note est dans la fenêtre de temps (10 ms d'écart)
@@ -224,7 +227,7 @@ class Game(val map: Map): Scene() {
 
             currentMapTime += 10 // On incrémente le temps de la map
             //Attendre 10ms
-            Thread.sleep(9)
+            Thread.sleep(10)
             try {
                 // Pour chaque note affiché
                 notesPrinted.forEach {
