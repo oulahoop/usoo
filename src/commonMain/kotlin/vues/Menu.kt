@@ -43,7 +43,7 @@ class Menu: Scene() {
         }
 
         //Set option button text
-        text("Options", textSize = 50.0, font = resourcesVfs["fonts/Roboto-Medium.ttf"].readTtfFont(), color = Colors["#ffffff"]) {
+        text("Touches", textSize = 50.0, font = resourcesVfs["fonts/Roboto-Medium.ttf"].readTtfFont(), color = Colors["#ffffff"]) {
             centerOn(optionButtonRect)
             filter = DropshadowFilter(3.0, 3.0, Colors.BLACK)
         }

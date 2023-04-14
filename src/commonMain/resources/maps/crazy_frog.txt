@@ -1,5 +1,5 @@
 name:crazy frog
-author:mael
+author:hugo
 difficulty:1
 music:crazy_frog.mp3
 TAP,0:06:646,B

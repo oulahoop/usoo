@@ -25,7 +25,15 @@ class Database {
     private fun connectToDatabase() {
         Class.forName("org.sqlite.JDBC");
 
-        val path = Paths.get("").toAbsolutePath().toString() + "/data/database.db"
+        // Get OS name
+        val os = System.getProperty("os.name").toLowerCase()
+
+        // If windows, use absolute path
+        val path = if (os.contains("win")) {
+            Paths.get("").toAbsolutePath().toString() + "\\data\\database.db"
+        } else {
+            Paths.get("").toAbsolutePath().toString() + "/data/database.db"
+        }
 
         connection = DriverManager.getConnection("jdbc:sqlite:$path")
     }

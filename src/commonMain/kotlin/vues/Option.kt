@@ -67,8 +67,8 @@ class Option: Scene() {
         }.position(200.0, 200.0)
 
         // Button retour
-        val bgField = roundRect(100.0, 50.0, 5.0, fill = Colors["#b9aea0"]) {
-            position(views.virtualWidth / 2 - 50, views.virtualHeight - 100)
+        val bgField = roundRect(200.0, 75.0, 5.0, fill = Colors["#b9aea0"]) {
+            position(views.virtualWidth / 2 - 75, views.virtualHeight - 200)
             onClick {
                 //Save préférences
                 PreferencesDAO().setPreferences(Utils.TOUCHES)
@@ -77,7 +77,7 @@ class Option: Scene() {
         }
 
         // Texte retour centré sur le bouton
-        text("Retour", textSize = 20.0, font = resourcesVfs["fonts/Roboto-Medium.ttf"].readTtfFont(), color = Colors.WHITE) {
+        text("Sauvegarder", textSize = 20.0, font = resourcesVfs["fonts/Roboto-Medium.ttf"].readTtfFont(), color = Colors.WHITE) {
             centerOn(bgField)
         }
     }

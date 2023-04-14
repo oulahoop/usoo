@@ -7,7 +7,6 @@ import com.soywiz.korge.view.*
 import com.soywiz.korge.view.ktree.*
 import com.soywiz.korio.file.std.*
 import com.soywiz.klock.*
-import com.soywiz.korev.*
 import com.soywiz.korio.async.*
 import models.*
 import models.Map
@@ -15,6 +14,7 @@ import vues.observer.*
 import kotlin.math.*
 
 class Game(val map: Map): Scene() {
+
 
     // Variables de jeu
     var score = 0
@@ -40,6 +40,11 @@ class Game(val map: Map): Scene() {
     lateinit var comboText : QView
     lateinit var lifeText : QView
     lateinit var precisionNoteText : QView
+
+    // Music
+    lateinit var music: Sound
+    lateinit var soundPlaying: SoundChannel
+
 
     // Observers
     private val gameObservers = mutableListOf<GameObserver>()
@@ -70,7 +75,7 @@ class Game(val map: Map): Scene() {
 
     override suspend fun SContainer.sceneMain() {
         // Récupération de la musique
-        val music = resourcesVfs[map.musicPath].readSound()
+        music = resourcesVfs[map.musicPath].readSound()
 
         // Lancement de la map dans un thread
         val t = Thread {
@@ -111,11 +116,16 @@ class Game(val map: Map): Scene() {
 
         // Lancement de la musique 2 secondes après le début de la map
         delay(2.seconds)
-        music.play()
+        soundPlaying = music.play()
     }
 
 
     private suspend fun endMap() {
+        // Save score to bdd
+        val scoreFinal = Score(map.getId(), this.score, this.maxCombo, this.x300, this.x100, this.x50, this.miss)
+        scoreFinal.save()
+
+
         // Reset game
         score = 0
         combo = 0
@@ -124,18 +134,12 @@ class Game(val map: Map): Scene() {
         notesPrinted = mutableListOf()
         currentMapTime = -2000L
 
-        // Save score to bdd
-        val score = Score(map.getId(), this.score, this.maxCombo, this.x300, this.x100, this.x50, this.miss)
-        //score.save()
 
         // Print score
-        println("Score : $score")
+        println("Score : $scoreFinal")
 
-        // Update last score
-        Utils.LAST_SCORE = score
-
-        // Change scene
-        sceneContainer.changeTo<Menu>()
+        // Retour au menu
+        sceneContainer.changeTo({ ScoreMenuScene(scoreFinal, soundPlaying, map)})
     }
 
 
@@ -183,6 +187,7 @@ class Game(val map: Map): Scene() {
             }
         }
 
+        // Si on sort de la boucle alors la map est fini et on envoie l'écran de score
         launch {
             endMap()
         }
@@ -224,11 +229,16 @@ class Game(val map: Map): Scene() {
         }
     }
 
+    /**
+     * Récupère les notes les plus proches du temps actuel de la map
+     */
     fun getClosestNotesPrinted(): MutableList<Note> {
         var closestTime = Long.MIN_VALUE
         val closestNotes = mutableListOf<Note>()
+        val lanes = mutableListOf<Bloc>()
 
         for (note in notesPrinted) {
+            /*
             // Si la note n'est pas affiché on la skip
             if (note.rect == null) {
                 continue
@@ -251,6 +261,21 @@ class Game(val map: Map): Scene() {
                     closestNotes.add(note)
                 }
             }
+             */
+
+            // SI note pas affiché, on skip
+            if (note.rect == null) {
+                continue
+            }
+
+            // SI lane déjà pris en compte, on skip car on veut pas double clique
+            if (lanes.contains(note.lane)) {
+                continue
+            }
+
+            // On ajoute la note à la liste
+            closestNotes.add(note)
+            lanes.add(note.lane)
         }
         return closestNotes
     }
@@ -308,7 +333,7 @@ class Game(val map: Map): Scene() {
         }
 
         // On met à jour le score et le combo max
-        score += value
+        score += value * combo
         maxCombo = max(maxCombo, combo)
 
         println("Score : $score, Combo : $combo, Life : $life")

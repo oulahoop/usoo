@@ -10,9 +10,6 @@ class Utils {
         // Touches (tableau de string)
         var TOUCHES = arrayOf("A", "B", "C", "D")
 
-        // Last Score
-        var LAST_SCORE = Score("", 0, 0, 0, 0, 0, 0)
-
         fun convertTimeStringToMs(timeString: String): Long {
             val parts = timeString.split(":")
             val minutes = parts[0].toInt()

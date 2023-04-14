@@ -14,7 +14,7 @@ import database.*
 
 class ChooseMapMenu: Scene() {
 
-    override suspend fun SContainer.sceneInit() {
+    override suspend fun SContainer.sceneMain() {
         //Set background images/background.png with a dark filter
         image(resourcesVfs["images/background.png"].readBitmap()) {
             filter = BlurFilter(8.0)
