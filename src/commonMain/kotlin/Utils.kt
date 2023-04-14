@@ -5,7 +5,7 @@ class Utils {
         var SPEED = 0.0
         val Y_NOTE_BASE = -100.0
         val Y_PERFECT_TIMING = 600.0
-        val TIME_BEFORE_SPAWN_NOTE = 2000;
+        val TIME_BEFORE_SPAWN_NOTE = 2000
 
         // Touches (tableau de string)
         var TOUCHES = arrayOf("A", "B", "C", "D")

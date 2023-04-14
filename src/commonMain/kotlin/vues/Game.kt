@@ -7,7 +7,12 @@ import com.soywiz.korge.view.*
 import com.soywiz.korge.view.ktree.*
 import com.soywiz.korio.file.std.*
 import com.soywiz.klock.*
+import com.soywiz.korge.animate.*
+import com.soywiz.korge.tween.*
+import com.soywiz.korim.color.*
 import com.soywiz.korio.async.*
+import com.soywiz.korio.async.launch
+import kotlinx.coroutines.*
 import models.*
 import models.Map
 import vues.observer.*
@@ -45,6 +50,11 @@ class Game(val map: Map): Scene() {
     lateinit var music: Sound
     lateinit var soundPlaying: SoundChannel
 
+    // Rectangle de clique
+    lateinit var rectA: QView
+    lateinit var rectB: QView
+    lateinit var rectC: QView
+    lateinit var rectD: QView
 
     // Observers
     private val gameObservers = mutableListOf<GameObserver>()
@@ -59,6 +69,12 @@ class Game(val map: Map): Scene() {
         comboText = myTree["combo"]
         //lifeText = myTree["life"]
         precisionNoteText = myTree["precisionNote"]
+
+        // Initialisation des rectangles de clique
+        rectA = myTree["rectA"]
+        rectB = myTree["rectB"]
+        rectC = myTree["rectC"]
+        rectD = myTree["rectD"]
 
         // Initialisation des observers
         val comboTextObserver = ComboText(comboText)
@@ -90,20 +106,68 @@ class Game(val map: Map): Scene() {
             val key3 = Utils.getKey(2)
             val key4 = Utils.getKey(3)
 
+            // Lorsque la touche 1 est pressée
             if (key1 != null && views.input.keys.justPressed(key1)) {
+                // Animation sur rectA pour visualiser le clic
+                launchImmediately {
+                    rectA.colorMul = Colors["#ff2f3e"]
+                }
                 keysPressed(key1.name)
             }
 
+            // Lorsque la touche 1 est relachée
+            if (key1 != null && views.input.keys.justReleased(key1)) {
+                launchImmediately {
+                    rectA.colorMul = Colors.RED
+                }
+            }
+
+            // Lorsque la touche 2 est pressée
             if (key2 != null && views.input.keys.justPressed(key2)) {
+                // Animation sur rectB pour visualiser le clic
+                launchImmediately {
+                    rectB.colorMul = Colors["#79ff74"]
+                }
+
                 keysPressed(key2.name)
             }
 
+            // Lorsque la touche 2 est relachée
+            if (key2 != null && views.input.keys.justReleased(key2)) {
+                launchImmediately {
+                    rectB.colorMul = Colors.GREEN
+                }
+            }
+
+            // Lorsque la touche 3 est pressée
             if (key3 != null && views.input.keys.justPressed(key3)) {
+                launchImmediately {
+                    rectC.colorMul = Colors["#6765ff"]
+                }
                 keysPressed(key3.name)
             }
 
+            // Lorsque la touche 3 est relachée
+            if (key3 != null && views.input.keys.justReleased(key3)) {
+                launchImmediately {
+                    rectC.colorMul = Colors.BLUE
+                }
+            }
+
+            // Lorsque la touche 4 est pressée
             if (key4 != null && views.input.keys.justPressed(key4)) {
+                // Animation sur rectD pour visualiser le clic
+                launchImmediately {
+                    rectD.colorMul = Colors["#f9ff9b"]
+                }
                 keysPressed(key4.name)
+            }
+
+            // Lorsque la touche 4 est relachée
+            if (key4 != null && views.input.keys.justReleased(key4)) {
+                launchImmediately {
+                    rectD.colorMul = Colors.YELLOW
+                }
             }
 
         }
@@ -124,7 +188,6 @@ class Game(val map: Map): Scene() {
         // Save score to bdd
         val scoreFinal = Score(map.getId(), this.score, this.maxCombo, this.x300, this.x100, this.x50, this.miss)
         scoreFinal.save()
-
 
         // Reset game
         score = 0
@@ -149,6 +212,11 @@ class Game(val map: Map): Scene() {
     private fun start(sContainer: SContainer) {
         //Notes a afficher
         val notesToPrint = map.notes
+
+        // Afficher le temps de chaque note
+        for (note in notesToPrint) {
+            println(note.time)
+        }
         //Tant que la dernière note n'est pas passé
         while (currentMapTime < notesToPrint.last().time + 2000) {
             //Pour chaque note
@@ -166,8 +234,10 @@ class Game(val map: Map): Scene() {
                 }
             }
 
-            currentMapTime += 10
+            currentMapTime += 10 // On incrémente le temps de la map
             //Attendre 10ms
+            Thread.sleep(9)
+            println(currentMapTime)
             try {
                 // Pour chaque note affiché
                 notesPrinted.forEach {
@@ -181,7 +251,6 @@ class Game(val map: Map): Scene() {
                         }
                     }
                 }
-                Thread.sleep(10)
             }catch (e: Exception) {
                 println(e)
             }
@@ -201,9 +270,6 @@ class Game(val map: Map): Scene() {
     fun keysPressed(key: String) {
         // Récupère le temps le plus proche du temps actuel de la map
         val notesToCheck = getClosestNotesPrinted()
-
-        println(notesToCheck)
-
 
         for (note in notesToCheck) {
             // Si la note est déjà disparue
