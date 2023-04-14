@@ -1,18 +1,14 @@
 package vues
 
 import Utils
+import com.soywiz.klock.*
 import com.soywiz.korau.sound.*
 import com.soywiz.korge.scene.*
 import com.soywiz.korge.view.*
 import com.soywiz.korge.view.ktree.*
-import com.soywiz.korio.file.std.*
-import com.soywiz.klock.*
-import com.soywiz.korge.animate.*
-import com.soywiz.korge.tween.*
 import com.soywiz.korim.color.*
 import com.soywiz.korio.async.*
-import com.soywiz.korio.async.launch
-import kotlinx.coroutines.*
+import com.soywiz.korio.file.std.*
 import models.*
 import models.Map
 import vues.observer.*
